@@ -1,0 +1,13 @@
+# defaults file for bacula-dir
+
+# Service can be disabled by setting
+# ENABLED="no"
+ENABLED="yes"
+
+# Additional start arguments can be provided here
+# ARGS="-u bacula -g bacula"
+ARGS="-u bacula -g bacula"
+
+# Default config file can be changed here
+# CONFIG="/etc/bacula/bacula-dir.conf"
+CONFIG="/etc/bacula/bacula-dir.conf"

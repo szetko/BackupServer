@@ -1,0 +1,21 @@
+TARGETS = rsyslog unattended-upgrades lxd lxcfs uuidd lvm2-lvmpolld open-vm-tools lvm2-lvmetad killprocs apport bacula-sd atd postfix puppet mdadm irqbalance single ntp rsync acpid cron ssh dbus bacula-fd bacula-director plymouth ondemand grub-common rc.local
+INTERACTIVE =
+bacula-sd: rsyslog
+atd: rsyslog
+postfix: rsyslog
+puppet: rsyslog
+mdadm: rsyslog
+irqbalance: rsyslog
+single: killprocs
+ntp: rsyslog
+rsync: rsyslog
+acpid: rsyslog
+cron: rsyslog
+ssh: rsyslog
+dbus: rsyslog
+bacula-fd: rsyslog bacula-sd
+bacula-director: rsyslog bacula-fd
+plymouth: bacula-sd rsyslog unattended-upgrades atd postfix lxd puppet mdadm lxcfs uuidd bacula-fd lvm2-lvmpolld open-vm-tools lvm2-lvmetad bacula-director irqbalance ntp rsync acpid cron ssh dbus apport
+ondemand: bacula-sd rsyslog unattended-upgrades atd postfix lxd puppet mdadm lxcfs uuidd bacula-fd lvm2-lvmpolld open-vm-tools lvm2-lvmetad bacula-director irqbalance ntp rsync acpid cron ssh dbus apport
+grub-common: bacula-sd rsyslog unattended-upgrades atd postfix lxd puppet mdadm lxcfs uuidd bacula-fd lvm2-lvmpolld open-vm-tools lvm2-lvmetad bacula-director irqbalance ntp rsync acpid cron ssh dbus apport
+rc.local: bacula-sd rsyslog unattended-upgrades atd postfix lxd puppet mdadm lxcfs uuidd bacula-fd lvm2-lvmpolld open-vm-tools lvm2-lvmetad bacula-director irqbalance ntp rsync acpid cron ssh dbus apport

@@ -1,0 +1,56 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          mt-st
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: tape device initialization
+# Description:       tape device initialization
+#                    (calls stinit to set device parameters)
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+PATH=/usr/sbin:/sbin:/usr/bin:/bin
+export PATH
+
+# Check for package existence
+test -x /sbin/stinit || exit 0
+
+# Check for package configuration
+test -f /etc/stinit.def || exit 0
+
+# Run the thing eventually
+case "$1" in
+    start)
+    	# Only start stinit if the st module is not loaded but the st device
+	# is in the kernel
+	# => only when we have st in the kernel
+	# When modules are used, modprobe takes care of doing things right.
+        if ! grep -q '^st[[:space:]]' /proc/modules \
+	&& grep -q '[[:space:]]st$' /proc/devices
+	then
+	    echo 'Initializing SCSI tapes...'
+	    stinit || exit $?
+	fi
+	;;
+    modload)
+	# modload may be called with a second argument (from udev), so just
+	# pass it on to stinit if it exists
+	if [ -n "$2" ]; then
+		stinit "$2"
+	else
+		stinit
+	fi
+	exit $?
+	;;
+    reload|restart|force-reload)
+        stinit || exit $?
+        ;;
+    stop)
+	;;
+    *)
+	echo "usage: $0 start|stop|reload|force-reload|restart|modload" 1>&2
+	exit 1
+esac

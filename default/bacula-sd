@@ -1,0 +1,13 @@
+# defaults file for bacula-sd
+
+# Service can be disabled by setting
+# ENABLED="no"
+ENABLED="yes"
+
+# Additional start arguments can be provided here
+# ARGS="-u bacula -g tape"
+ARGS="-u bacula -g tape"
+
+# Default config file can be changed here
+# CONFIG="/etc/bacula/bacula-sd.conf"
+CONFIG="/etc/bacula/bacula-sd.conf"

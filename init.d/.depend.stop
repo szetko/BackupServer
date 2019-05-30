@@ -1,0 +1,16 @@
+TARGETS = unattended-upgrades lxd lxcfs uuidd lvm2-lvmpolld open-vm-tools lvm2-lvmetad atd postfix puppet resolvconf mdadm irqbalance ntp ufw bacula-director plymouth open-iscsi urandom bacula-fd iscsid bacula-sd sendsigs rsyslog umountnfs.sh hwclock.sh networking umountfs cryptdisks cryptdisks-early umountroot mdadm-waitidle halt reboot
+bacula-fd: bacula-director
+iscsid: open-iscsi
+bacula-sd: bacula-fd
+sendsigs: open-iscsi bacula-sd unattended-upgrades atd postfix lxd puppet iscsid mdadm lxcfs uuidd bacula-fd plymouth open-vm-tools bacula-director irqbalance
+rsyslog: bacula-sd atd postfix puppet mdadm bacula-fd bacula-director sendsigs irqbalance ntp
+umountnfs.sh: bacula-sd unattended-upgrades atd postfix lxd puppet lxcfs uuidd bacula-fd sendsigs plymouth open-vm-tools bacula-director rsyslog irqbalance
+hwclock.sh: atd uuidd rsyslog
+networking: open-iscsi umountnfs.sh postfix puppet iscsid
+umountfs: open-iscsi urandom bacula-sd unattended-upgrades umountnfs.sh atd postfix lxd puppet resolvconf iscsid mdadm lxcfs uuidd networking bacula-fd lvm2-lvmpolld hwclock.sh plymouth open-vm-tools lvm2-lvmetad bacula-director irqbalance
+cryptdisks: umountfs
+cryptdisks-early: cryptdisks umountfs
+umountroot: cryptdisks umountfs cryptdisks-early
+mdadm-waitidle: umountroot
+halt: umountroot mdadm-waitidle
+reboot: umountroot mdadm-waitidle

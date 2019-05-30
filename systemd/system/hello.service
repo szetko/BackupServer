@@ -1,0 +1,7 @@
+[Unit]
+Description=Hello world service
+After=systemd-user-sessions.service
+[Service]
+SyslogIdentifier=HelloWorldService
+Type=simple
+ExecStart=/home/Chas/hello.sh

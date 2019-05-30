@@ -1,0 +1,8 @@
+# This file contains example definitions for different kinds of tape
+# devices. 
+#
+# You can find some examples in /usr/share/doc/mt-st/examples.
+#
+# Common definitions to be applied to all tape devices
+# (This is the driver's default)
+{buffer-writes read-ahead async-writes}
